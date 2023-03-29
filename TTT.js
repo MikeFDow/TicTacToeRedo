@@ -21,9 +21,22 @@ const gameBoard = (() => {
         console.log(boardWithCellValues);
     }
 
+
+    // playMove function for checking available spaces and if move is valid,
+    //  add arguments
+
+    // !!check that availableCells is working after changing intial value of indexes from 0
+
+    const playMove = () => {
+        const availableCells = board.filter((row) => row.map((cell) => cell.getValue().value = 0));
+        // if statement for invalid move check goes here
+        console.log(availableCells);
+    }
+
     return {
         getboard,
-        printBoard
+        printBoard,
+        playMove
     }
 })(); // may need to change this from IIFE!
 
