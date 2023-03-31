@@ -49,12 +49,40 @@ function Cell() {
     let value = 0;   // initial value
 
     // accept move to change value of cell
-    
+    const addToken = (player) => {
+        value = player;
+    }
 
     //retrieve current value of cell through closure
     const getValue = () => value;
 
     return {
         getValue,
+        addToken
     }
+}
+
+
+// GameController module/function. Controls flow of game, win logic
+
+function gameController(
+    playerOneName = "Player One",
+    playerTwoName = "Player Two"
+) {
+
+    const players = [
+        {
+            name : playerOneName,
+            token : 1
+        },
+        {
+            name : playerTwoName,
+            token : 2
+        }
+    ];
+
+    let activePlayer = players[0];
+
+    return activePlayer;            // temporary, players will be included in future functions that
+                   // will be returned instead
 }
