@@ -51,6 +51,7 @@ function Cell() {
     // accept move to change value of cell
     const addToken = (player) => {
         value = player;
+        return value;
     }
 
     //retrieve current value of cell through closure
@@ -65,10 +66,15 @@ function Cell() {
 
 // GameController module/function. Controls flow of game, win logic
 
+// NOTE on switchplayer function: returns player two when called but when getActiveplayer
+// is called, still player one
+
 function gameController(
     playerOneName = "Player One",
     playerTwoName = "Player Two"
 ) {
+
+    
 
     const players = [
         {
@@ -83,6 +89,33 @@ function gameController(
 
     let activePlayer = players[0];
 
-    return activePlayer;            // temporary, players will be included in future functions that
+    
+/*
+    const switchPlayerTurn = () => {  // ternary operator
+        return activePlayer = activePlayer === players[0] ? players[1] : players[0];
+    };
+*/
+    function switchPlayer() {
+        if (activePlayer = players[0]) {
+            activePlayer = players[1];
+        } else {
+            activePlayer = players[0];
+        }
+        return activePlayer;
+    };
+
+    const getActivePlayer = () => activePlayer; 
+
+    const printNewRound = () => {
+        gameBoard.printBoard();
+        console.log(`${getActivePlayer().name}'s turn'`);
+    };
+
+    return {
+        getActivePlayer,
+        switchPlayer,
+        players,
+        printNewRound
+    };            // temporary, players will be included in future functions that
                    // will be returned instead
 }
