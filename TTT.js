@@ -27,11 +27,11 @@ const gameBoard = (() => {
 
     // !!check that availableCells is working after changing intial value of indexes from 0
 
-    const playMove = () => {
+    const playMove = (row, column, player) => {
         const availableCells = board.filter((row) => row.map((cell) => cell.getValue().value = 0));
         // if statement for invalid move check goes here
-        console.log(availableCells);
-    }
+        board[row][column].addToken(player);
+    };
 
     return {
         getboard,
@@ -98,10 +98,9 @@ function gameController(
     function switchPlayer() {
         if (activePlayer = players[0]) {
             activePlayer = players[1];
-        } else {
+        } else if (activePlayer = players[1]) {
             activePlayer = players[0];
         }
-        return activePlayer;
     };
 
     const getActivePlayer = () => activePlayer; 
@@ -111,11 +110,18 @@ function gameController(
         console.log(`${getActivePlayer().name}'s turn'`);
     };
 
+    const playRound = (row, column) => {
+        gameBoard.playMove(row, column, getActivePlayer().token);
+        switchPlayer();
+        printNewRound();
+    }
+
     return {
-        getActivePlayer,
         switchPlayer,
+        getActivePlayer,
         players,
-        printNewRound
+        printNewRound,
+        playRound
     };            // temporary, players will be included in future functions that
                    // will be returned instead
 }
