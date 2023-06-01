@@ -108,44 +108,58 @@ function gameController(
         console.log(`${getActivePlayer().name}'s turn'`);
     };
 
+    function endGame () {
+        for (let r = 0; r < 3; r++) {
+            for (let c = 0; c < 3; c++) {
+                gameBoard.board[r][c].addToken(0);
+            }
+        }
+        
+    }
+
     function checkLine (a,b,c) {
         return ((a != 0) && (a == b) && (a == c));
     }
 
     function checkWinner (bd) {      // win logic function, what is bd in argument? the array?
-        
-            // check down
-            /*
-            for (r = 0; r < 3; r++)
-                for (c = 0; c < 3; c++)
-                    if (checkLine(bd[r][c], bd[r+1][c], bd[r+2][c])) {
-                        return bd[r][c]; 
-                    }
-                    
+        let result = 0;
+        // check down
+        for (c = 0; c < 3; c++)
+            if (checkLine(bd[0][c], bd[1][c], bd[2][c])) {
+                
+                result = bd[0][c]; 
             
-           
-                    
-                // check right, works but not if down check is enabled
-            for (r = 0; r < 3; r++)
-                for (c = 0; c < 3; c++)
-                    if (checkLine(bd[r][c], bd[r][c+1], bd[r][c+2])) {
-                        return bd[r][c];
-                    }
-                    
-               */  //check down
-                    for (c = 0; c < 3; c++)
-                        if (checkLine(bd[0][c], bd[1][c], bd[2][c])) {
-                            return bd[0][c]; 
-                        }  
-                    
-                    // check right
-                    for (r = 0; r < 3; r++)
-                        if (checkLine(bd[r][0], bd[r][1], bd[r][2])) {
-                        return bd[r][0];
-                        }
-                    
-                    
-            return 0;          
+            }  
+                        
+        // check right
+        for (r = 0; r < 3; r++)
+             if (checkLine(bd[r][0], bd[r][1], bd[r][2])) {
+                console.log("endgame");
+                return bd[r][0];
+            }
+
+        //check diagonal down right
+        if (checkLine(bd[0][0], bd[1][1], bd[2][2])) {
+            console.log("endgame");
+            return bd[0][0];
+        }
+
+        //check diagonal down left
+        if (checkLine(bd[0][2], bd[1][1], bd[2][0])) {
+            console.log("end game");
+            return bd[0][2];
+        }
+
+        if (result == 1) {
+            console.log("player one wins");
+            endGame();
+        } else if (result == 2) {
+            console.log("player two wins");
+            endGame();
+        }
+                        
+                        
+        return result;          
     };
 
     const playRound = (row, column) => {
@@ -153,7 +167,7 @@ function gameController(
 
         
 
-
+        checkWinner(gameBoard.printBoard());
         
 
         switchPlayerTurn();
@@ -167,29 +181,25 @@ function gameController(
         players,
         printNewRound,
         playRound,
-        checkWinner
+        checkWinner,
+        endGame
     };            // temporary, players will be included in future functions that
                    // will be returned instead
 }
 
 const gc = gameController();
 
-// right check
-gc.playRound(0,0);  //p1
-gc.playRound(1,0); //p2
-gc.playRound(0,1); //p1
-gc.playRound(2,2); //p2
-gc.playRound(0,2); //p1
-
 /*
-// down check
-gc.playRound(0,0);  //p1
-gc.playRound(0,1); //p2
-gc.playRound(1,0); //p1
-gc.playRound(2,2); //p2
+// check
+gc.playRound(0,2);  //p1
+gc.playRound(1,0); //p2
+gc.playRound(1,1); //p1
+gc.playRound(1,2); //p2
 gc.playRound(2,0); //p1
-
 */
+
+
+
 
 function checkArray (a) {
     for (r = 0; r < 3; r++)
