@@ -1,4 +1,20 @@
+// DOM and UI
+
+const container = document.querySelector('.container');
+
+let boardSpace = document.createElement('div');
+
+
+
+boardSpace.classList.add('boardSpace');
+
+
+
+
+
 // Module for Game Board
+
+let moveCheck = "valid";
 
 const gameBoard = (() => {
     const rows = 3;
@@ -23,23 +39,41 @@ const gameBoard = (() => {
         
     }
 
+    const printUIBoard = () => {
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                let boardSpace = document.createElement('div');
+                boardSpace.classList.add('boardSpace');
+                container.appendChild(boardSpace);
+               // boardSpace.textContent = printBoard()[i][j];
+            }
+        }
+    }
 
-    // playMove function for checking available spaces and if move is valid,
-    //  add arguments
+    printUIBoard();
 
-    // !!check that availableCells is working after changing intial value of indexes from 0
+
+    // playMove function for checking available spaces and if move is valid
 
     const playMove = (row, column, player) => {
-        const availableCells = board.filter((row) => row.map((cell) => cell.getValue().value = 0));
-        // if statement for invalid move check goes here
-        board[row][column].addToken(player);
+        // const availableCells = board.filter((row) => row.map((cell) => cell.getValue().value = 0));
+        // if statement for invalid move check 
+        if(gameBoard.printBoard()[row][column] === 0) {
+            board[row][column].addToken(player);
+            boardSpace.textContent = printBoard()[row][column];
+            moveCheck = "valid";
+        } else {
+            console.log("invalid move");
+            moveCheck = "invalid";
+        };
     };
 
     return {
         getboard,
         printBoard,
         playMove,
-        board
+        board,
+        printUIBoard
     }
 })(); // may need to change this from IIFE!
 
@@ -134,20 +168,20 @@ function gameController(
         // check right
         for (r = 0; r < 3; r++)
              if (checkLine(bd[r][0], bd[r][1], bd[r][2])) {
-                console.log("endgame");
-                return bd[r][0];
+                
+                result = bd[r][0];
             }
 
         //check diagonal down right
         if (checkLine(bd[0][0], bd[1][1], bd[2][2])) {
-            console.log("endgame");
-            return bd[0][0];
+            
+            result = bd[0][0];
         }
 
         //check diagonal down left
         if (checkLine(bd[0][2], bd[1][1], bd[2][0])) {
-            console.log("end game");
-            return bd[0][2];
+            
+            result = bd[0][2];
         }
 
         if (result == 1) {
@@ -163,15 +197,24 @@ function gameController(
     };
 
     const playRound = (row, column) => {
+        
         gameBoard.playMove(row, column, getActivePlayer().token);
+        // console.log(gameBoard.printBoard()[row][column]);
+        console.log(moveCheck);
+        if(moveCheck === "valid") {
 
+            
+
+            checkWinner(gameBoard.printBoard());
         
 
-        checkWinner(gameBoard.printBoard());
-        
-
-        switchPlayerTurn();
-        printNewRound();
+            switchPlayerTurn();
+            printNewRound();
+            
+        } else {
+            console.log("moveCheck is invalid");
+            return;
+        };
     }
 
     return {
@@ -189,20 +232,15 @@ function gameController(
 
 const gc = gameController();
 
-/*
+
 // check
-gc.playRound(0,2);  //p1
-gc.playRound(1,0); //p2
-gc.playRound(1,1); //p1
-gc.playRound(1,2); //p2
+gc.playRound(1,0);  //p1
+gc.playRound(2,2); //p2
+gc.playRound(0,1); //p1
+gc.playRound(1,1); //p2
 gc.playRound(2,0); //p1
-*/
 
 
 
 
-function checkArray (a) {
-    for (r = 0; r < 3; r++)
-        for (c = 0; c < 3; c++)
-            console.log(a[r][c], a[r+1][c], a[r+2][c]);  
-}
+
