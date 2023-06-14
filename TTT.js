@@ -1,16 +1,38 @@
 // DOM and UI
 
 const container = document.querySelector('.container');
+/*
+function detectSpace (div) {
+    let clickedSpace = div.id;
+    console.log(clickedSpace);
+    let row = 1;
+    let column = 1;
+    switch (clickedSpace) {
 
-let boardSpace = document.createElement('div');
+        case "one":
+            row = 0;
+            column = 0;
+            break;
+        case "two":
+            row = 0;
+            column = 1;
+            break;
+    }
+    console.log(row);
+    console.log(column);
+    gc.playRound(row, column);
+}
 
+const spaces = document.querySelectorAll('div.boardSpace');
 
+spaces.forEach((div) => {
+    div.addEventListener('click', () => {
+        detectSpace(div);
+        
+    });
+});
 
-boardSpace.classList.add('boardSpace');
-
-
-
-
+*/
 
 // Module for Game Board
 
@@ -38,7 +60,7 @@ const gameBoard = (() => {
         return boardWithCellValues;
         
     }
-
+    /*
     const printUIBoard = () => {
         for (let i = 0; i < 3; i++) {
             for (let j = 0; j < 3; j++) {
@@ -48,9 +70,17 @@ const gameBoard = (() => {
                // boardSpace.textContent = printBoard()[i][j];
             }
         }
-    }
+        const spaces = document.querySelectorAll('div.boardSpace');
 
-    printUIBoard();
+        spaces.forEach((div) => {
+            div.addEventListener('click', () => {
+                console.log("click works");
+                div.textContent = printBoard()[2][1];
+            });
+        });
+    }
+    */
+    // printUIBoard();
 
 
     // playMove function for checking available spaces and if move is valid
@@ -60,7 +90,6 @@ const gameBoard = (() => {
         // if statement for invalid move check 
         if(gameBoard.printBoard()[row][column] === 0) {
             board[row][column].addToken(player);
-            boardSpace.textContent = printBoard()[row][column];
             moveCheck = "valid";
         } else {
             console.log("invalid move");
@@ -73,7 +102,7 @@ const gameBoard = (() => {
         printBoard,
         playMove,
         board,
-        printUIBoard
+        //printUIBoard
     }
 })(); // may need to change this from IIFE!
 
@@ -199,7 +228,7 @@ function gameController(
     const playRound = (row, column) => {
         
         gameBoard.playMove(row, column, getActivePlayer().token);
-        // console.log(gameBoard.printBoard()[row][column]);
+        
         console.log(moveCheck);
         if(moveCheck === "valid") {
 
@@ -217,6 +246,69 @@ function gameController(
         };
     }
 
+
+
+    function detectSpace (div) {
+        let clickedSpace = div.id;
+        console.log(clickedSpace);
+        let row = 1;
+        let column = 1;
+        switch (clickedSpace) {
+    
+            case "one":
+                row = 0;
+                column = 0;
+                break;
+            case "two":
+                row = 0;
+                column = 1;
+                break;
+            case "three":
+                row = 0;
+                column = 2;
+                break;
+            case "four":
+                row = 1;
+                column = 0;
+                break;
+            case "five":
+                row = 1;
+                column = 1;
+                break;
+            case "six":
+                row = 1;
+                column = 2;
+                break;
+            case "seven":
+                row = 2;
+                column = 0;
+                break;
+            case "eight":
+                row = 2;
+                column = 1;
+                break;
+            case "nine":
+                row = 2;
+                column = 2;
+                break;
+        }
+        console.log(row);
+        console.log(column);
+        gc.playRound(row, column);
+        div.textContent = gameBoard.printBoard()[row][column];
+    }
+    
+    const spaces = document.querySelectorAll('div.boardSpace');
+    
+    spaces.forEach((div) => {
+        div.addEventListener('click', () => {
+            detectSpace(div);
+            
+        });
+    });
+
+
+
     return {
         activePlayer,
         switchPlayerTurn,
@@ -232,7 +324,7 @@ function gameController(
 
 const gc = gameController();
 
-
+/*
 // check
 gc.playRound(1,0);  //p1
 gc.playRound(2,2); //p2
@@ -240,7 +332,7 @@ gc.playRound(0,1); //p1
 gc.playRound(1,1); //p2
 gc.playRound(2,0); //p1
 
-
+*/
 
 
 
