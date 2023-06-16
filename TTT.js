@@ -1,38 +1,11 @@
 // DOM and UI
 
 const container = document.querySelector('.container');
-/*
-function detectSpace (div) {
-    let clickedSpace = div.id;
-    console.log(clickedSpace);
-    let row = 1;
-    let column = 1;
-    switch (clickedSpace) {
-
-        case "one":
-            row = 0;
-            column = 0;
-            break;
-        case "two":
-            row = 0;
-            column = 1;
-            break;
-    }
-    console.log(row);
-    console.log(column);
-    gc.playRound(row, column);
-}
 
 const spaces = document.querySelectorAll('div.boardSpace');
 
-spaces.forEach((div) => {
-    div.addEventListener('click', () => {
-        detectSpace(div);
-        
-    });
-});
+const playerwinbox = document.querySelector('#playerwin');
 
-*/
 
 // Module for Game Board
 
@@ -60,27 +33,7 @@ const gameBoard = (() => {
         return boardWithCellValues;
         
     }
-    /*
-    const printUIBoard = () => {
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                let boardSpace = document.createElement('div');
-                boardSpace.classList.add('boardSpace');
-                container.appendChild(boardSpace);
-               // boardSpace.textContent = printBoard()[i][j];
-            }
-        }
-        const spaces = document.querySelectorAll('div.boardSpace');
-
-        spaces.forEach((div) => {
-            div.addEventListener('click', () => {
-                console.log("click works");
-                div.textContent = printBoard()[2][1];
-            });
-        });
-    }
-    */
-    // printUIBoard();
+   
 
 
     // playMove function for checking available spaces and if move is valid
@@ -147,11 +100,11 @@ function gameController(
     const players = [
         {
             name : playerOneName,
-            token : 1
+            token : "X"
         },
         {
             name : playerTwoName,
-            token : 2
+            token : "O"
         }
     ];
 
@@ -171,13 +124,22 @@ function gameController(
         console.log(`${getActivePlayer().name}'s turn'`);
     };
 
+    function popupShow () {
+        document.getElementById("startover").style.visibility = "visible";
+        document.getElementById("playerwin").style.visibility ="visible";
+    };
+
     function endGame () {
         for (let r = 0; r < 3; r++) {
             for (let c = 0; c < 3; c++) {
                 gameBoard.board[r][c].addToken(0);
+                
             }
         }
-        
+        spaces.forEach((div) => {
+            div.textContent = "";
+        });
+        playerwinbox.textContent = "";
     }
 
     function checkLine (a,b,c) {
@@ -213,12 +175,14 @@ function gameController(
             result = bd[0][2];
         }
 
-        if (result == 1) {
+        if (result == "X") {
             console.log("player one wins");
-            endGame();
-        } else if (result == 2) {
+            popupShow();
+            playerwinbox.textContent = "Player One Wins";
+        } else if (result == "O") {
             console.log("player two wins");
-            endGame();
+            popupShow();
+            playerwinbox.textContent = "Player Two Wins";
         }
                         
                         
@@ -234,7 +198,7 @@ function gameController(
 
             
 
-            checkWinner(gameBoard.printBoard());
+            // checkWinner(gameBoard.printBoard());
         
 
             switchPlayerTurn();
@@ -250,7 +214,6 @@ function gameController(
 
     function detectSpace (div) {
         let clickedSpace = div.id;
-        console.log(clickedSpace);
         let row = 1;
         let column = 1;
         switch (clickedSpace) {
@@ -292,13 +255,13 @@ function gameController(
                 column = 2;
                 break;
         }
-        console.log(row);
-        console.log(column);
         gc.playRound(row, column);
         div.textContent = gameBoard.printBoard()[row][column];
+        gc.checkWinner(gameBoard.printBoard());
+        
     }
     
-    const spaces = document.querySelectorAll('div.boardSpace');
+    
     
     spaces.forEach((div) => {
         div.addEventListener('click', () => {

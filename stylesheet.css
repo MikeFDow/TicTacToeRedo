@@ -1,3 +1,20 @@
+.bigcontainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-bottom: 10px;
+}
+
+.buttoncontainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.smallbuttoncontainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
 .boardSpace {
     border: 5px solid blue;
     width: 200px;
@@ -9,8 +26,29 @@
 
 
 .container {
+    width: 610px;
     border: 5px solid green;
     display: grid;
     grid-template-columns: 200px 200px 200px;
     grid-template-rows: 1fr 1fr 1fr;
+}
+
+
+.popup {
+    visibility: visible;
+    
+}
+
+
+
+#startover {
+    width: 150px;
+    height: 100px;
+    border: 5px solid rgb(122, 122, 124);
+}
+
+#playerwin {
+    width: 295px;
+    height: 50px;
+    border: 5px solid rgb(122, 122, 124);
 }
